@@ -1,8 +1,14 @@
 import React from "react";
 import './CostumeBotton.scss'
-const CostumeButton=({children,...otherProps})=> (
-    <button className="custom-button" {...otherProps}>
-        {children}
-    </button>
-)
+
+function CostumeButton({ children, googlesignin, ...otherProps }) {
+    var condiction=googlesignin ? 'googlesign-in' : ' '
+    var singnincondition=  condiction +' custom-button'  ;
+    return (
+            <button className={ singnincondition} {...otherProps}>
+                {children}
+            </button>
+    )
+}
+
 export default CostumeButton
