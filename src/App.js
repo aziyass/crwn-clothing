@@ -7,29 +7,31 @@ import Signinup from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
 import { BrowserRouter as Router
    , Switch 
    , Route 
+   , Redirect
    } from 'react-router-dom'
 import { auth , createuserprofile } from './firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { SetCurrentUser } from './redux/user/user.action'
-
 class App extends React.Component{
-  
+
   unsubscribeFromAuth=null
   componentDidMount(){
     this.unsubscribeFromAuth = auth.onAuthStateChanged( async(userAuth) => {
+      const {SetCurrentUser} = this.props
       if(userAuth){
        const userRef = await createuserprofile(userAuth)
         userRef.onSnapshot(snapshot=> {
-        this.props.SetCurrentUser({
+        SetCurrentUser({
           id:snapshot.id,
           ...snapshot.data()
         })
       })
-      
       }
-      this.props.SetCurrentUser(userAuth)
+      SetCurrentUser(userAuth)
     })
+    
   }
+  
   componentWillUnmount(){
     this.unsubscribeFromAuth();
   }
@@ -39,11 +41,12 @@ class App extends React.Component{
     <div >
       <Router> 
         <div className="App"> 
-        <Header /> 
+        <Header currentUser= {this.props.currentUser} /> 
            <Switch> 
              <Route exact path='/' component={Homepage}  /> 
              <Route path='/shop' component={Shop}  /> 
-             <Route path='/signin' component={Signinup}  /> 
+             <Route exact path='/signin' 
+             render={()=> this.props.currentUser ? <Redirect to='/' /> : <Signinup/> }/> 
            </Switch>
         </div>
       </Router>     
@@ -51,9 +54,10 @@ class App extends React.Component{
   )
   }
 }
-
+const mapStateToProps=(user)=> ({
+  currentUser:user.currentUser  
+})
 const mapDispatchToProps=dispatch=> ({
   SetCurrentUser:user=> dispatch(SetCurrentUser(user))
 })
-
-export default connect(null,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
