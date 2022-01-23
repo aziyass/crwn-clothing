@@ -1,11 +1,10 @@
 import React from "react";
 import './CostumeBotton.scss'
 
-function CostumeButton({ children, googlesignin, ...otherProps }) {
-    var condiction=googlesignin ? 'googlesign-in' : ' '
-    var singnincondition=  condiction +' custom-button'  ;
+function CostumeButton({ children, googlesignin, inverted , ...otherProps }) {
     return (
-            <button className={ singnincondition} {...otherProps}>
+            <button className={ `${inverted ? 'inverted' : ' ' } 
+            ${googlesignin ? 'googlesign-in' : ' '} custom-button`} {...otherProps}>
                 {children}
             </button>
     )

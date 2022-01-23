@@ -1,17 +1,25 @@
 import React from "react";
-
+import CostumeButton from "../CostumeBotton/CostumeBotton";
 import './collection-item.scss'
+import {connect} from 'react-redux'
 
-function Citem({id,name,price,imageUrl}){
-    var style_item ={ backgroundImage: "url(" +  imageUrl  + ")"} 
+import {AddItem} from '../../redux/cart/cart.action'
+
+const Citem=({item,AddItem}) => {
+    const {name,price,imageUrl}=item;
     return(
         <div className="collection-item" >
-            <div className="image" style={style_item} />
+            <div className="image" style={{backgroundImage: `url(${imageUrl})`}} />            
             <div className="collection-footer">
                 <span className="name" > {name} </span>
                 <span className="price" > {price} </span>
             </div> 
+            <CostumeButton onClick={()=> AddItem(item)}  inverted > add to card </CostumeButton>
         </div>
     )
 }
-export default Citem
+const mapDispatchToProps=dispatch=> ({
+    AddItem : item => dispatch(AddItem(item))
+})
+
+export default  connect ( null,mapDispatchToProps) (Citem)

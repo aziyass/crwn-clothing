@@ -1,7 +1,8 @@
 import  cartActionToggle  from "./cart.type";
-
+import { addItemToCart } from "./cart.util";
 const Initialeze_Cart={
     hidden : true
+    ,cartItems:[]
 }
 
 const CartReducer = (state= Initialeze_Cart , action)=> {
@@ -10,6 +11,11 @@ const CartReducer = (state= Initialeze_Cart , action)=> {
             return{
                 ...state,
                 hidden : !state.hidden
+            }
+        case cartActionToggle.ADD_ITEM:
+            return{
+                ...state,
+                cartItems:addItemToCart(state.cartItems,action.payload)
             }
         default:
             return(state)

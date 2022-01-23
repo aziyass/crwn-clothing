@@ -5,7 +5,7 @@ import './cart-dropdown.scss'
 const DropDownCart=()=> (
     <div className="cart-dropdown">
         <div className="cart-items" /> 
-        <CostumeButton className="button"> Go To Checkout </CostumeButton>
+        <CostumeButton > Go To Checkout </CostumeButton>
     </div>
 )
 export default DropDownCart
