@@ -6,14 +6,14 @@ import { auth } from "../../firebase/firebase.utils";
 import { connect } from "react-redux";
 import CartIcon from "../cart-Icon/cart-icon";
 import DropDownCart from "../cart-dropdown/cart-dropdown";
-const Header = ({ currentuser , hidden }) => (
+const Header = ({ currentUser , hidden }) => (
     <div className="header">
         <Link className="logo-container" to='/'> <Logo className='logo' />  </Link>
         <div className="options">
             <Link className="option" to='/shop' > SHOP </Link>
             <Link className="option" to='/contact' > CONTACT </Link>
             {
-                currentuser ?
+                currentUser ?
                     (<div className="option" onClick={() => auth.signOut()} >
                         Sign out
                     </div>)
