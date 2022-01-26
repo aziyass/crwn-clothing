@@ -17,6 +17,13 @@ const CartReducer = (state= Initialeze_Cart , action)=> {
                 ...state,
                 cartItems:addItemToCart(state.cartItems,action.payload)
             }
+        case cartActionToggle.CLEAR_ITEM_FROM_CART:
+            return{
+                ...state,
+                cartItems:state.cartItems.filter(
+                    cartItem=> cartItem.id != action.payload.id
+                )
+            }
         default:
             return(state)
     }
